@@ -138,6 +138,12 @@ func (client *HTTPClient) makeRequest(fullURL, host string, data io.Reader) (*ht
 
 	if host != "" {
 		req.Host = host
+	} else {
+		for _, h := range client.headers {
+			if h.Name == "Host" {
+				req.Host = h.Value
+			}
+		}
 	}
 
 	if client.userAgent != "" {
